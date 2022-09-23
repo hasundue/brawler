@@ -1,5 +1,9 @@
 import * as log from "https://deno.land/std@0.157.0/log/mod.ts";
-import { dirname, join } from "https://deno.land/std@0.157.0/path/mod.ts";
+import {
+  basename,
+  dirname,
+  join,
+} from "https://deno.land/std@0.157.0/path/mod.ts";
 import { transform } from "https://deno.land/x/dnt@0.30.0/transform.ts";
 
 interface Options {
@@ -17,27 +21,18 @@ export function setup(options: Options) {
   });
 }
 
+const getOutdir = (scriptPath: string) =>
+  join(dirname(scriptPath), ".cache", "brawler");
+
 export async function build(scriptPath: string) {
   log.info(`building ${scriptPath}...`);
-
-  const outdir = join(
-    dirname(scriptPath),
-    ".cache",
-    "brawler",
-  );
-
-  log.info(`outdir = ${outdir}`);
-  log.info(`transforming the script to Node.js format...`);
 
   const output = await transform({
     entryPoints: [scriptPath],
     target: "ES2021",
   });
 
-  const count = output.main.files.length;
-
-  log.info(`transformed ${count} files.`);
-
+  const outdir = getOutdir(scriptPath);
   const encoder = new TextEncoder();
 
   for (const file of output.main.files) {
@@ -51,5 +46,55 @@ export async function build(scriptPath: string) {
     );
   }
 
-  log.info(`written out ${count} files.`);
+  const count = output.main.files.length;
+  log.info(`transformed ${count} files.`);
+}
+
+const list = (array: string[]) => array.join(", ");
+
+export async function watch(
+  scriptPath: string,
+  watcher: Deno.FsWatcher,
+) {
+  for await (const event of watcher) {
+    log.info(`Detected changes: ${list(event.paths)}`);
+    await build(scriptPath);
+  }
+}
+
+export async function dev(scriptPath: string) {
+  const cwd = Deno.cwd();
+  const scriptDir = dirname(scriptPath);
+
+  await build(scriptPath);
+
+  const outdir = getOutdir(scriptPath);
+  log.info(`outdir = ${outdir}`);
+  Deno.chdir(outdir);
+
+  const wrangler = Deno.run({
+    cmd: ["wrangler", "dev", basename(scriptPath)],
+    stdin: "inherit",
+    stdout: "inherit",
+  });
+
+  Deno.chdir(cwd);
+
+  const watched: string[] = [];
+  for await (const entry of Deno.readDir(scriptDir)) {
+    if (entry.name !== ".cache") {
+      watched.push(join(scriptDir, entry.name));
+    }
+  }
+
+  log.info(`Watching changes: ${list(watched)}`);
+  const watcher = Deno.watchFs(watched);
+  watch(scriptPath, watcher);
+
+  const status = await wrangler.status();
+  wrangler.close();
+
+  watcher.close();
+
+  return status.code;
 }
