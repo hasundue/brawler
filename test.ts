@@ -7,11 +7,10 @@ const testDir = "./test";
 
 Deno.test("init", async () => {
   try {
-    await Deno.stat(testDir);
     await Deno.remove(testDir, { recursive: true });
-  } finally {
-    await Deno.mkdir(testDir);
+  } catch {
   }
+  await Deno.mkdir(testDir);
   Deno.chdir(testDir);
 
   await init();
@@ -31,11 +30,10 @@ Deno.test("init", async () => {
 
 Deno.test("init brawler-test -c brawler.toml", async () => {
   try {
-    await Deno.stat(testDir);
     await Deno.remove(testDir, { recursive: true });
-  } finally {
-    await Deno.mkdir(testDir);
+  } catch {
   }
+  await Deno.mkdir(testDir);
   Deno.chdir(testDir);
 
   await init("brawler-test", { config: "brawler.toml" });
