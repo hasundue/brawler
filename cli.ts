@@ -13,7 +13,7 @@ new Command()
   )
   .option("-c, --config <path:string>", "Path to .toml configuration file")
   .arguments("[name:string] [options...]")
-  .action((options, name) => init(name, options))
+  .action(async (options, name) => await init(name, options))
   .command(
     "dev",
     "Start a local server for developing your worker.\nYou can pass any other options available in wrangler.",
@@ -24,8 +24,8 @@ new Command()
   })
   .option("--log-level <level:log-level>", "Specify logging level")
   .arguments("<script:string> [options...]")
-  .action((options, script) =>
-    dev(script, {
+  .action(async (options, script) =>
+    await dev(script, {
       logLevel: options.logLevel ?? "log",
       ...options,
     })
