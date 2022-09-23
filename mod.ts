@@ -5,6 +5,7 @@ import {
   join,
 } from "https://deno.land/std@0.157.0/path/mod.ts";
 import { transform } from "https://deno.land/x/dnt@0.30.0/transform.ts";
+import { watch } from "npm:chokidar@3.5.3";
 
 interface Options {
   log?: log.LevelName;
@@ -50,18 +51,6 @@ export async function build(scriptPath: string) {
   log.info(`transformed ${count} files.`);
 }
 
-const list = (array: string[]) => array.join(", ");
-
-export async function watch(
-  scriptPath: string,
-  watcher: Deno.FsWatcher,
-) {
-  for await (const event of watcher) {
-    log.info(`Detected changes: ${list(event.paths)}`);
-    await build(scriptPath);
-  }
-}
-
 export async function dev(scriptPath: string) {
   const cwd = Deno.cwd();
   const scriptDir = dirname(scriptPath);
@@ -80,16 +69,10 @@ export async function dev(scriptPath: string) {
 
   Deno.chdir(cwd);
 
-  const watched: string[] = [];
-  for await (const entry of Deno.readDir(scriptDir)) {
-    if (entry.name !== ".cache") {
-      watched.push(join(scriptDir, entry.name));
-    }
-  }
+  log.info(`Watching changes in ${scriptDir}...`);
 
-  log.info(`Watching changes: ${list(watched)}`);
-  const watcher = Deno.watchFs(watched);
-  watch(scriptPath, watcher);
+  const watcher = watch(scriptDir, { ignored: /.cache/ })
+    .on("change", () => build(scriptPath));
 
   const status = await wrangler.status();
   wrangler.close();
