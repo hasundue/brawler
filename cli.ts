@@ -15,5 +15,10 @@ new Command()
   .option("--log-level <level:log-level>", "Specify logging level")
   .option("-*, --* [value]", "Options passed to wrangler", { hidden: true })
   .arguments("<script:string> [options...]")
-  .action(async (options, script) => await dev(script, options))
+  .action(async (options, script) =>
+    await dev(script, {
+      logLevel: options.logLevel ?? "log",
+      ...options,
+    })
+  )
   .parse();

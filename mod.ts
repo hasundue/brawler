@@ -16,7 +16,6 @@ export const wranglerLogLevel = [
   "none",
 ] as const;
 
-// configuration for loggers
 log.setup({
   handlers: {
     console: new log.handlers.ConsoleHandler("DEBUG", {
@@ -42,9 +41,9 @@ type BuildOptions = {
 
 export async function build(
   scriptPath: string,
-  options: BuildOptions,
+  options?: BuildOptions,
 ) {
-  const logger = log.getLogger(options.logLevel ?? "log");
+  const logger = log.getLogger(options?.logLevel ?? "log");
   logger.debug(`Building ${scriptPath}...`);
 
   const output = await transform({
@@ -72,14 +71,14 @@ export async function build(
 
 type DevOptions = {
   [x: string]: true | string | undefined;
-  logLevel?: typeof wranglerLogLevel[number];
+  logLevel: typeof wranglerLogLevel[number];
 };
 
 export async function dev(
   scriptPath: string,
-  options: DevOptions,
+  options?: DevOptions,
 ) {
-  const { logLevel, ...wranglerOptions } = options;
+  const { logLevel, ...wranglerOptions } = options ?? { logLevel: "log" };
   const logger = log.getLogger(logLevel);
 
   const cwd = Deno.cwd();
@@ -91,7 +90,7 @@ export async function dev(
   Deno.chdir(outdir);
 
   const cmd = ["wrangler", "dev", basename(scriptPath)];
-  cmd.concat(["--log-level", options.logLevel ?? "log"]);
+  cmd.concat(["--log-level", logLevel]);
 
   Object.entries(wranglerOptions).forEach(([key, value]) => {
     const prefix = key.length === 1 ? "-" : "--";
