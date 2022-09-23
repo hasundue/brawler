@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "cli": "deno --unstable run -A cli.ts",
     "dev": "deno --unstable run -A cli.ts dev",
     "test": "deno --unstable test -A"
   }
