@@ -7,6 +7,7 @@ const bin = Sys.iswindows() ? "brawler.cmd" : "brawler"
 const brawler = "$root/bin/$bin"
 
 const host = "http://localhost:8787"
+const dt = Sys.iswindows() ? 10 : 1
 
 match(cmd::Cmd, str::String) = occursin(
   str,
@@ -14,7 +15,7 @@ match(cmd::Cmd, str::String) = occursin(
 )
 
 function match(host, str::String)
-  sleep(1)
+  sleep(dt)
   res = HTTP.request("GET", host)
   return String(res.body) == str
 end
