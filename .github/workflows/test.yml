@@ -33,11 +33,14 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-22.04
-          - windows-2022
-          - maxos-12
+          - ubuntu-latest
+          - windows-latest
 
     runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout
@@ -47,6 +50,9 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.25.4
+
+      - name: Set PATH
+        run: echo "${HOME}/.deno/bin" >> $GITHUB_PATH
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
