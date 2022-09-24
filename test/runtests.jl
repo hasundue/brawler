@@ -6,7 +6,7 @@ const root = pwd()
 const bin = Sys.iswindows() ? "brawler.cmd" : "brawler"
 const brawler = joinpath(root, "bin", bin)
 
-const host = "http://127.0.0.1:8787"
+const host = "http://localhost:8787"
 
 match(cmd::Cmd, str::String) = occursin(
   str,
