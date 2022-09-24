@@ -6,6 +6,7 @@ import { dev, init, wranglerLogLevel } from "./mod.ts";
 
 new Command()
   .name("brawler")
+  .version("0.1.0")
   .description("Develop and deploy Cloudflare Workers with Deno and Wrangler")
   .command(
     "init",

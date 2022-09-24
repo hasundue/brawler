@@ -1,7 +1,5 @@
 {
   "tasks": {
-    "cli": "deno --unstable run -A cli.ts",
-    "dev": "deno --unstable run -A cli.ts dev",
-    "test": "deno --unstable test -A --no-check"
+    "install": "deno install -f --unstable -A --name brawler cli.ts",
   }
 }
