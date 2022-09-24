@@ -47,6 +47,14 @@ jobs:
         with:
           deno-version: v1.25.4
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Install wrangler
+        run: npm i @cloudflare/wrangler -g
+
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
         with:
