@@ -55,6 +55,9 @@ jobs:
       - name: Install Wrangler
         run: npm install -g wrangler@2.1.6
 
+      - name: Test Wrangler
+        run: wrangler dev examples/hono/index.ts -l --port 8000 & 
+
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
         with:
