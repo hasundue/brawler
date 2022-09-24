@@ -48,8 +48,6 @@ end
   end
 end
 
-run(`$brawler dev examples/hono/index.ts -l`)
-
 @testset "dev hono" begin
   @test match(`$brawler dev -h`, "--log-level")
 
