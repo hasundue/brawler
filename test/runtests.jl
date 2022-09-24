@@ -4,7 +4,7 @@ using HTTP
 
 const root = pwd()
 const bin = Sys.iswindows() ? "brawler.cmd" : "brawler"
-const brawler = joinpath(root, "bin", bin)
+const brawler = "$root/bin/$bin"
 
 const host = "http://localhost:8787"
 
