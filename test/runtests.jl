@@ -2,7 +2,6 @@ using Test
 using StringManipulation
 
 const root = pwd()
-const cache = joinpath("./.cache", "test")
 const bin = Sys.iswindows() ? "brawler.cmd" : "brawler"
 const brawler = joinpath(root, "bin", bin)
 
@@ -23,22 +22,20 @@ end
 @testset "init" begin
   @test match(`$brawler init -h`, "brawler")
 
-  mkpath(cache)
-  cd(cache)
-  rm("deno.json", force=true)
-  rm("wrangler.toml", force=true)
+  tempdir = mktempdir()
+  cd(tempdir)
 
   run(`$brawler init`)
-  @test match(`cat deno.json`, "cloudflare/workers-types")
-  @test match(`cat wrangler.toml`, "test")
 
-  rm("deno.json", force=true)
-  rm("wrangler.toml", force=true)
+  @test match(`cat deno.json`, "cloudflare/workers-types")
+  @test match(`cat wrangler.toml`, basename(tempdir))
+
+  cd(mktempdir())
 
   run(`$brawler init brawler-test -c brawler.toml`)
+
   @test match(`cat deno.json`, "cloudflare/workers-types")
   @test match(`cat brawler.toml`, "brawler-test")
-
-  cd(root)
 end
+
 

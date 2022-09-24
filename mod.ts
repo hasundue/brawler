@@ -75,11 +75,16 @@ export async function init(
 
 type BuildOptions = {
   logLevel?: typeof wranglerLogLevel[number];
+  tempDir?: string;
 };
 
-// we abuse the fact that deno fmt and deno lint ignore node_modules
-export const cacheDir = (scriptPath: string) =>
-  join(dirname(scriptPath), "node_modules");
+const makeTempDir = async () => {
+  const tempDir = await Deno.makeTempDir({ prefix: "brawler" });
+  globalThis.addEventListener("unload", async () => {
+    await Deno.remove(tempDir);
+  });
+  return tempDir;
+};
 
 export async function build(
   scriptPath: string,
@@ -93,16 +98,16 @@ export async function build(
     target: "ES2021",
   });
 
-  const outdir = cacheDir(scriptPath);
+  const tempDir = options?.tempDir ?? await makeTempDir();
   const encoder = new TextEncoder();
 
   for (const file of output.main.files) {
     await Deno.mkdir(
-      join(outdir, dirname(file.filePath)),
+      join(tempDir, dirname(file.filePath)),
       { recursive: true },
     );
     await Deno.writeFile(
-      join(outdir, file.filePath),
+      join(tempDir, file.filePath),
       encoder.encode(file.fileText),
     );
   }
@@ -123,13 +128,10 @@ export async function dev(
   const { logLevel, ...wranglerOptions } = options ?? { logLevel: "log" };
   const logger = log.getLogger(logLevel);
 
-  const cwd = Deno.cwd();
   const scriptDir = dirname(scriptPath);
+  const tempDir = await makeTempDir();
 
-  await build(scriptPath, { logLevel });
-
-  const outdir = cacheDir(scriptPath);
-  Deno.chdir(outdir);
+  await build(scriptPath, { logLevel, tempDir });
 
   const cmd = ["wrangler", "dev", basename(scriptPath)];
   cmd.concat(["--log-level", logLevel]);
@@ -141,13 +143,17 @@ export async function dev(
   });
 
   logger.debug(`Launching wrangler...`);
-  const wrangler = Deno.run({ cmd, stdin: "inherit", stdout: "inherit" });
 
-  Deno.chdir(cwd);
+  const wrangler = Deno.run({
+    cmd,
+    cwd: tempDir,
+    stdin: "inherit",
+    stdout: "inherit",
+  });
 
   logger.debug(`Watching changes in ${scriptDir}...`);
   const watcher = watch(scriptDir, { ignored: /(^|[\/\\])\../ }) // ignore dotfiles
-    .on("change", () => build(scriptPath, { logLevel }));
+    .on("change", () => build(scriptPath, { logLevel, tempDir }));
 
   const status = await wrangler.status();
   wrangler.close();
