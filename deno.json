@@ -1,5 +1,5 @@
 {
   "tasks": {
-    "install": "deno install -f --unstable -A --name brawler cli.ts"
+    "install": "deno install -f --unstable -A --name brawler --root . cli.ts"
   }
 }
