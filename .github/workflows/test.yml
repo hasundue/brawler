@@ -33,9 +33,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
-          - windows-latest
-          - maxos-latest
+          - ubuntu-22.04
+          - windows-2022
+          - maxos-12
 
     runs-on: ${{ matrix.os }}
 
@@ -54,7 +54,7 @@ jobs:
           version: 1.8.1
 
       - name: Install dependencies
-        run: julia -e 'using Pkg; Pkg.add("StringManipulation")'
+        run: julia test/addpkgs.jl
 
       - name: Test
-        run: julia test.jl
+        run: julia test/runtests.jl
