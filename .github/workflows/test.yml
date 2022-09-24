@@ -58,4 +58,4 @@ jobs:
           project: test
 
       - name: Test
-        run: julia --project=test test/runtests.jl
+        run: julia --color=yes --project=test test/runtests.jl
