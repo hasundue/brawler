@@ -51,17 +51,14 @@ end
 @testset "dev hono" begin
   @test match(`$brawler dev -h`, "--log-level")
 
-  example = joinpath(root, "examples", "hono", "index.ts")
-  test = joinpath(root, "test", "hono", "index.ts")
-
   mktempdir() do tempdir
     cd(tempdir) do
-      cp(example, "index.ts")
+      cp("$root/examples/hono/index.ts", "index.ts")
 
       proc = run(`$brawler dev index.ts -l`, wait=false)
       @test match(host, "Hello! Hono!")
 
-      cp(test, "index.ts", force=true)
+      cp("$root/test/hono/index.ts", "index.ts", force=true)
       @test match(host, "Hello, again! Hono!")
 
       kill(proc)
