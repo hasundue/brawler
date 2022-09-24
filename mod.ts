@@ -133,8 +133,7 @@ export async function dev(
 
   await build(scriptPath, { logLevel, tempDir });
 
-  const wranglerCmd = Deno.build.os === "windows" ? "wrangler.cmd" : "wrangler";
-  const cmd = [wranglerCmd, "dev", basename(scriptPath)];
+  const cmd = ["npx", "wrangler", "dev", basename(scriptPath)];
   cmd.concat(["--log-level", logLevel]);
 
   Object.entries(wranglerOptions).forEach(([key, value]) => {
