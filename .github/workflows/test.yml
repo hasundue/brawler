@@ -53,10 +53,7 @@ jobs:
           node-version: 16.x
 
       - name: Install Wrangler
-        run: npm i @cloudflare/wrangler -g
-
-      - name: Test Wrangler
-        run: wrangler dev examples/hono/index.ts
+        run: npm install wrangler -g
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
