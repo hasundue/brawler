@@ -155,8 +155,10 @@ export async function dev(
   logger.debug(`Watching changes in ${scriptDir}...`);
 
   const buildFunc = () => build(scriptPath, { logLevel, tempDir });
-  const watcher = watch(scriptDir, { ignored: /(^|[\/\\])\../ }) // ignore dotfiles
-    .on("add", buildFunc)
+  const watcher = watch(scriptDir, {
+    ignored: /(^|[\/\\])\../, // ignore dotfiles
+    usePolling: Deno.build.os === "windows",
+  }).on("add", buildFunc)
     .on("change", buildFunc)
     .on("unlink", buildFunc);
 
