@@ -52,7 +52,7 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Install wrangler
+      - name: Install Wrangler
         run: npm i @cloudflare/wrangler -g
 
       - name: Setup Julia

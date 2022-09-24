@@ -50,6 +50,10 @@ end
 @testset "dev hono" begin
   @test match(`$brawler dev -h`, "--log-level")
 
+  proc = run(`$brawler dev examples/hono/index.ts -l`, wait=false)
+  sleep(10)
+  kill(proc)
+
   mktempdir() do tempdir
     cd(tempdir) do
       cp("$root/examples/hono/index.ts", "index.ts")
