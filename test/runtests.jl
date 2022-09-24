@@ -2,7 +2,7 @@ using Test
 using StringManipulation
 
 const root = pwd()
-const brawler = joinpath(root, "bin", "brawler")
+const brawler = joinpath(root, "bin", "brawler.cmd")
 const cache = joinpath("./.cache", "test")
 
 match(cmd::Cmd, str::String) = occursin(
