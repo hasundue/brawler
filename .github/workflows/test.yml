@@ -55,7 +55,7 @@ jobs:
       - name: Install dependencies
         uses: julia-actions/julia-buildpkg@v1
         with:
-          project: ./test
+          project: test
 
       - name: Test
-        run: julia --project ./test ./test/runtests.jl
+        run: julia --project test test/runtests.jl
