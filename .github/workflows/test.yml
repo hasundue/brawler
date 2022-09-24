@@ -51,13 +51,13 @@ jobs:
         with:
           deno-version: v1.25.4
 
-      - name: Set PATH
-        run: echo "${HOME}/.deno/bin" >> $GITHUB_PATH
-
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
         with:
           version: 1.8.1
+
+      - name: Set PATH
+        run: julia -e 'joinpath(homedir(), ".deno", "bin")' >> $GITHUB_PATH
 
       - name: Install dependencies
         run: julia test/addpkgs.jl
