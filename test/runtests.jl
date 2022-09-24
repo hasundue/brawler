@@ -8,7 +8,7 @@ const brawler = "$root/bin/$bin"
 
 const host = "http://localhost:8787"
 
-match(cmd::Cmd, str::String) = occursin(
+const match(cmd::Cmd, str::String) = occursin(
   str,
   remove_decorations(readchomp(cmd))
 )
@@ -18,8 +18,6 @@ function match(host, str::String)
   res = HTTP.request("GET", host)
   return String(res.body) == str
 end
-
-const killcmd = Sys.iswindows() ? `taskkill -f -im wrangler.cmd -t` : `pkill -f wrangler`
 
 @testset "install" begin
   run(`deno task install`)
@@ -57,13 +55,14 @@ end
     cd(tempdir) do
       cp("$root/examples/hono/index.ts", "index.ts")
 
-      proc = run(`$brawler dev index.ts -l`, wait=false)
+      proc = open(`$brawler dev index.ts -l`, write=true)
       @test match(host, "Hello! Hono!")
 
       cp("$root/test/hono/index.ts", "index.ts", force=true)
       @test match(host, "Hello, again! Hono!")
 
-      run(killcmd) # TODO: use better way to kill wrangler
+      write(proc, 'x')
+      close(proc)
     end
   end
 end
