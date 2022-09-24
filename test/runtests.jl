@@ -19,6 +19,8 @@ function match(host, str::String)
   return String(res.body) == str
 end
 
+const killcmd = Sys.iswindows() ? `taskkill -f -im '*'wrangler'*'` : `pkill -f wrangler`
+
 @testset "install" begin
   run(`deno task install`)
   @test match(`$brawler --version`, "brawler")
@@ -61,7 +63,7 @@ end
       cp("$root/test/hono/index.ts", "index.ts", force=true)
       @test match(host, "Hello, again! Hono!")
 
-      kill(proc)
+      run(killcmd) # TODO: use better way to kill wrangler
     end
   end
 end

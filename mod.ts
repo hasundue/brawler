@@ -2,12 +2,12 @@ import * as log from "https://deno.land/std@0.157.0/log/mod.ts";
 import {
   basename,
   dirname,
+  extname,
   join,
 } from "https://deno.land/std@0.157.0/path/mod.ts";
 import { format } from "https://deno.land/std@0.157.0/datetime/mod.ts";
 import { transform } from "https://deno.land/x/dnt@0.30.0/transform.ts";
 import { jason } from "https://deno.land/x/jason_formatter@v2.2.0/mod.ts";
-import { watch } from "npm:chokidar@3.5.3";
 
 export const wranglerLogLevel = [
   "debug",
@@ -116,6 +116,24 @@ export async function build(
   logger.debug(`Transformed ${count} files.`);
 }
 
+function watch(
+  scriptPath: string,
+  builder: () => Promise<void>,
+) {
+  const watcher = Deno.watchFs(dirname(scriptPath));
+
+  const handler = async () => {
+    for await (const event of watcher) {
+      if (event.kind === "modify" && extname(event.paths[0]) === ".ts") {
+        builder();
+      }
+    }
+  };
+  handler();
+
+  return watcher;
+}
+
 type DevOptions = {
   [x: string]: true | string | undefined;
   logLevel: typeof wranglerLogLevel[number];
@@ -154,13 +172,8 @@ export async function dev(
 
   logger.debug(`Watching changes in ${scriptDir}...`);
 
-  const buildFunc = () => build(scriptPath, { logLevel, tempDir });
-  const watcher = watch(scriptDir, {
-    ignored: /(^|[\/\\])\../, // ignore dotfiles
-    usePolling: Deno.build.os === "windows",
-  }).on("add", buildFunc)
-    .on("change", buildFunc)
-    .on("unlink", buildFunc);
+  const builder = () => build(scriptPath, { logLevel, tempDir });
+  const watcher = watch(scriptDir, builder);
 
   const status = await wrangler.status();
   wrangler.close();
