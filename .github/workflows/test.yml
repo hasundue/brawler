@@ -55,7 +55,7 @@ jobs:
       - name: Install Wrangler
         run: |
           npm install -g wrangler@2.1.6
-          wrangler --version
+          wrangler -h
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1

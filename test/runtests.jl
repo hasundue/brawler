@@ -14,7 +14,7 @@ match(cmd::Cmd, str::String) = occursin(
 )
 
 function match(host, str::String)
-  sleep(10)
+  sleep(1)
   res = HTTP.request("GET", host)
   return String(res.body) == str
 end
