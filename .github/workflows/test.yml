@@ -53,7 +53,7 @@ jobs:
           node-version: 16.x
 
       - name: Install Wrangler
-        run: npm install wrangler -g
+        run: npm install -g wrangler@2.1.6
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
