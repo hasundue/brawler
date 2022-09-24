@@ -1,0 +1,6 @@
+[deps]
+StringManipulation = "892a3eda-7b42-436c-8928-eab12a02cf0e"
+
+[compat]
+julia = "1.8"
+StringManipulation = "0.3"

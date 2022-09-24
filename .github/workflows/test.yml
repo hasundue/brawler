@@ -53,7 +53,9 @@ jobs:
           version: 1.8.1
 
       - name: Install dependencies
-        run: julia test/addpkgs.jl
+        uses: julia-actions/julia-buildpkg@v1
+        with:
+          project: ./test
 
       - name: Test
-        run: julia test/runtests.jl
+        run: julia ./test/runtests.jl
