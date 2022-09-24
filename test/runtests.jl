@@ -3,7 +3,7 @@ using StringManipulation
 
 const root = pwd()
 const brawler = joinpath(root, "bin", "brawler")
-const cache = joinpath(".cache", "test")
+const cache = joinpath("./.cache", "test")
 
 match(cmd::Cmd, str::String) = occursin(
   str,
@@ -32,7 +32,7 @@ end
   @test match(`cat wrangler.toml`, "test")
 
   rm("deno.json", force=true)
-  rm("brawler.toml", force=true)
+  rm("wrangler.toml", force=true)
 
   run(`$brawler init brawler-test -c brawler.toml`)
   @test match(`cat deno.json`, "cloudflare/workers-types")
