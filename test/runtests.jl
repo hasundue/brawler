@@ -2,8 +2,9 @@ using Test
 using StringManipulation
 
 const root = pwd()
-const brawler = joinpath(root, "bin", "brawler.cmd")
 const cache = joinpath("./.cache", "test")
+const bin = Sys.iswindows() ? "brawler.cmd" : "brawler"
+const brawler = joinpath(root, "bin", bin)
 
 match(cmd::Cmd, str::String) = occursin(
   str,
