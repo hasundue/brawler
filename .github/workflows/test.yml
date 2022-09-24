@@ -57,7 +57,5 @@ jobs:
         with:
           project: test
 
-      - name: Run test
-        uses: julia-actions/julia-runtest@v1
-        with:
-          project: test
+      - name: Test
+        run: julia --project=test test/runtests.jl
