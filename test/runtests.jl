@@ -19,7 +19,7 @@ function match(host, str::String)
   return String(res.body) == str
 end
 
-const killcmd = Sys.iswindows() ? `taskkill -f -im '*'wrangler'*'` : `pkill -f wrangler`
+const killcmd = Sys.iswindows() ? `taskkill -f -im wrangler.cmd -t` : `pkill -f wrangler`
 
 @testset "install" begin
   run(`deno task install`)
