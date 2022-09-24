@@ -30,6 +30,7 @@ jobs:
     needs: check
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
@@ -41,6 +42,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.25.4
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
