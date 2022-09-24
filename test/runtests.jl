@@ -13,6 +13,11 @@ match(cmd::Cmd, str::String) = occursin(
   remove_decorations(readchomp(cmd))
 )
 
+function match(host, str::String)
+  res = HTTP.request("GET", host)
+  return String(res.body) == str
+end
+
 @testset "install" begin
   run(`deno task install`)
   @test match(`$brawler --version`, "brawler")
@@ -50,15 +55,11 @@ end
       cp("$root/examples/hono/index.ts", "index.ts")
 
       proc = run(`$brawler dev index.ts -l`, wait=false)
-
-      res = HTTP.request("GET", host)
-      @test String(res.body) == "Hello! Hono!"
+      @test match(host, "Hello! Hono!")
 
       cp("$root/test/hono/index.ts", "index.ts", force=true)
       sleep(1)
-
-      res = HTTP.request("GET", host)
-      @test_broken String(res.body) == "Hello, again! Hono!"
+      @test_broken match(host, "Hello, again! Hono!")
 
       kill(proc)
     end
