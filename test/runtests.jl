@@ -14,6 +14,7 @@ match(cmd::Cmd, str::String) = occursin(
 )
 
 function match(host, str::String)
+  sleep(10)
   res = HTTP.request("GET", host)
   return String(res.body) == str
 end
@@ -50,10 +51,6 @@ end
 @testset "dev hono" begin
   @test match(`$brawler dev -h`, "--log-level")
 
-  proc = run(`$brawler dev examples/hono/index.ts -l`, wait=false)
-  sleep(10)
-  kill(proc)
-
   mktempdir() do tempdir
     cd(tempdir) do
       cp("$root/examples/hono/index.ts", "index.ts")
@@ -62,8 +59,7 @@ end
       @test match(host, "Hello! Hono!")
 
       cp("$root/test/hono/index.ts", "index.ts", force=true)
-      sleep(1)
-      @test_broken match(host, "Hello, again! Hono!")
+      @test match(host, "Hello, again! Hono!")
 
       kill(proc)
     end
