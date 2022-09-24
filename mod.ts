@@ -77,8 +77,9 @@ type BuildOptions = {
   logLevel?: typeof wranglerLogLevel[number];
 };
 
+// we abuse the fact that deno fmt and deno lint ignore node_modules
 export const cacheDir = (scriptPath: string) =>
-  join(dirname(scriptPath), ".cache", "brawler");
+  join(dirname(scriptPath), "node_modules");
 
 export async function build(
   scriptPath: string,
