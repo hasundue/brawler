@@ -153,8 +153,12 @@ export async function dev(
   });
 
   logger.debug(`Watching changes in ${scriptDir}...`);
+
+  const buildFunc = () => build(scriptPath, { logLevel, tempDir });
   const watcher = watch(scriptDir, { ignored: /(^|[\/\\])\../ }) // ignore dotfiles
-    .on("change", () => build(scriptPath, { logLevel, tempDir }));
+    .on("add", buildFunc)
+    .on("change", buildFunc)
+    .on("unlink", buildFunc);
 
   const status = await wrangler.status();
   wrangler.close();
