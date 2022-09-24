@@ -55,7 +55,7 @@ end
     cd(tempdir) do
       cp("$root/examples/hono/index.ts", "index.ts")
 
-      proc = open(`$brawler dev index.ts -l`, write=true)
+      proc = open(`$brawler dev index.ts -l --inspect false`, write=true)
       @test match(host, "Hello! Hono!")
 
       cp("$root/test/hono/index.ts", "index.ts", force=true)
