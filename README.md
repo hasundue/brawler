@@ -48,3 +48,9 @@ brawler publish index.ts --name my-brawler-project
 - [/examples/hono](/examples/hono): Hello-world with
   [Hono](https://github.com/honojs/hono) framework
   - Hosted version: https://brawler-hono.hasundue.workers.dev
+
+## Background
+
+Yes, we have `denoflare` (https://denoflare.dev), which is a great project letting you work with a pure Deno environment. The project bravely follows the philosophy of Deno.
+
+However, `denoflare` still lacks a significant portion of functionality in `wrangler`, which is why this project exists for now.
