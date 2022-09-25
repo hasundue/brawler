@@ -1,0 +1,73 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.25.4
+
+      - name: Format
+        run: deno fmt --check
+
+      - name: Lint
+        run: deno lint
+
+  test:
+    needs: check
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.25.4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.17
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@2.1.6
+
+      - name: Setup Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: 1.8.1
+
+      - name: Install dependencies
+        run: julia --color=yes --project=test -e 'using Pkg; Pkg.build()'
+
+      - name: Test
+        run: julia --color=yes --project=test test/runtests.jl
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_SUBDOMAIN: ${{ secrets.CLOUDFLARE_SUBDOMAIN }}
