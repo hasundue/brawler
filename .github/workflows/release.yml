@@ -1,4 +1,4 @@
-name: CI
+name: Release
 
 on:
   push:
@@ -9,12 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    uses: ./.github/workflows/test.yml
-
   release:
-    needs: test
-
     runs-on: ubuntu-latest
 
     steps:
@@ -40,5 +35,5 @@ jobs:
           tag: '${{ env.NEW_TAG }}'
           name: '${{ env.NEW_TAG }}'
           bodyFile: 'CHANGELOG.md'
-          draft: false
+          draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
