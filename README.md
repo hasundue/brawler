@@ -7,12 +7,9 @@
 ![OS](https://img.shields.io/badge/OS-Ubuntu%20%7C%20Windows-blue)
 
 `brawler` is a command-line tool and library to develop and deploy
+[Deno](https://deno.land) scripts for
 [Cloudflare Workers](https://workers.cloudflare.com) with
-[Deno](https://deno.land) and
 [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started).
-
-It uses `dnt` (https://github.com/denoland/dnt) for Deno-to-Node transformation
-internally.
 
 > **Warning**\
 > The project is still in an early-beta stage and not tested extensively yet.
@@ -38,7 +35,7 @@ You can pass any options available in `wrangler`.
 See `brawler --help` and `wrangler --help` for details.
 
 ```sh
-# create wrangler.toml and deno.json in the current directory
+# create wrangler.toml and deno.json in cwd (optional)
 brawler init
 
 # develop a script locally with hot-reload
@@ -48,6 +45,13 @@ brawler dev index.ts
 # publish it
 brawler publish index.ts --name my-brawler-project
 ```
+
+## How it works
+
+`brawler` is basically a wrapper of `wrangler`.
+
+It transforms Deno scripts into Node modules by `dnt` (https://github.com/denoland/dnt), and passes them to `wrangler`.
+It also watches updates on a project with `Deno.watchFs` and repeats the procedure for each updat.
 
 ## Examples
 
