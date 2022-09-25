@@ -1,7 +1,9 @@
 # brawler
 
-`brawler` is a command-line tool and library to develop and deploy Cloudflare
-Workers with Deno and Wrangler.
+`brawler` is a command-line tool and library to develop and deploy
+[Cloudflare Workers](https://workers.cloudflare.com) with
+[Deno](https://deno.land) and
+[Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started).
 
 It uses `dnt` (https://github.com/denoland/dnt) for Deno-to-Node transformation
 internally.
@@ -25,7 +27,9 @@ installed to use `brawler`.
 Use `brawler init`, `brawler dev`, and `brawler publish` instead of
 `wrangler init`, `wrangler dev`, and `wrangler publish`, respectively.
 
-See `brawler --help` for details.
+You can pass any options available in `wrangler`.
+
+See `brawler --help` and `wrangler --help` for details.
 
 ```sh
 # create wrangler.toml and deno.json in the current directory
@@ -41,6 +45,6 @@ brawler publish index.ts --name my-brawler-project
 
 ## Examples
 
-- [/examples/hono](/examples/hono): Hello-world with Hono framework
-  (https://github.com/honojs/hono)
-  - Deployed at https://brawler-hono.hasundue.workers.dev
+- [/examples/hono](/examples/hono): Hello-world with
+  [Hono](https://github.com/honojs/hono) framework
+  - Hosted version: https://brawler-hono.hasundue.workers.dev
