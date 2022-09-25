@@ -51,7 +51,7 @@ brawler publish index.ts --name my-brawler-project
 `brawler` is basically a wrapper of `wrangler`.
 
 It transforms Deno scripts into Node modules by `dnt` (https://github.com/denoland/dnt), and passes them to `wrangler`.
-It also watches updates on a project with `Deno.watchFs` and repeats the procedure for each updat.
+It also watches updates on a project by `Deno.watchFs` and repeats the procedure for each update.
 
 ## Examples
 
