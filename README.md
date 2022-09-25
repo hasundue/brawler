@@ -51,6 +51,9 @@ brawler publish index.ts --name my-brawler-project
 
 ## Background
 
-Yes, we have `denoflare` (https://denoflare.dev), which is a great project letting you work with a pure Deno environment. The project bravely follows the philosophy of Deno.
+Yes, we have `denoflare` (https://denoflare.dev), which is a great project
+letting you work with a pure Deno environment. The project bravely follows the
+philosophy of Deno.
 
-However, `denoflare` still lacks a significant portion of functionality in `wrangler`, which is why this project exists for now.
+However, `denoflare` still lacks a significant portion of functionality in
+`wrangler`, which is why this project exists for now.
