@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "types": [
+      "https://pax.deno.dev/cloudflare/workers-types/index.d.ts"
+    ]
+  }
+}

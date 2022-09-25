@@ -19,8 +19,8 @@ function match(host, str::String)
   return String(res.body) == str
 end
 
-@testset "install" begin
-  run(`deno task install`)
+@testset "build" begin
+  run(`deno task build`)
   @test match(`$brawler --version`, "brawler")
 end
 
