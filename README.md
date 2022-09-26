@@ -1,10 +1,12 @@
 # brawler
 
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
+
 ![Deno](https://img.shields.io/badge/Deno-1.25.4-blue)
 ![Node](https://img.shields.io/badge/Node-16.17.0-blue)
 ![Wrangler](https://img.shields.io/badge/Wrangler-2.1.6-blue)
-![OS](https://img.shields.io/badge/OS-Ubuntu%20%7C%20Windows-blue)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-latest-blue)
+![Windows](https://img.shields.io/badge/Windows-latest-blue)
 
 `brawler` is a command-line tool and library to develop and deploy
 [Deno](https://deno.land) scripts for
@@ -48,7 +50,7 @@ brawler publish index.ts --name my-brawler-project
 
 ## How it works
 
-`brawler` is basically a wrapper of `wrangler`.
+`brawler` is basically just a wrapper of `wrangler`.
 
 It transforms Deno scripts into Node modules by `dnt`
 (https://github.com/denoland/dnt), and passes them to `wrangler`. It also
@@ -64,8 +66,7 @@ each update.
 ## Background
 
 Yes, we have `denoflare` (https://denoflare.dev), which is a great project
-letting you work with a pure Deno environment. The project bravely follows the
-philosophy of Deno.
+letting you work with a pure Deno environment.
 
 However, `denoflare` still lacks a significant portion of functionality in
 `wrangler`, which is why this project exists for now.
