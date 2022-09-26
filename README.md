@@ -1,7 +1,6 @@
 # brawler
 
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
-
 ![Deno](https://img.shields.io/badge/Deno-1.25.4-blue)
 ![Node](https://img.shields.io/badge/Node-16.17.0-blue)
 ![Wrangler](https://img.shields.io/badge/Wrangler-2.1.6-blue)
