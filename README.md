@@ -1,16 +1,18 @@
 # brawler
 
+<!-- deno-fmt-ignore-start -->
+
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
-![Deno](https://img.shields.io/badge/Deno-1.25.4-blue)
-![Node](https://img.shields.io/badge/Node-16.17.0-blue)
-![Wrangler](https://img.shields.io/badge/Wrangler-2.1.6-blue)
-![Ubuntu](https://img.shields.io/badge/Ubuntu-latest-blue)
-![Windows](https://img.shields.io/badge/Windows-latest-blue)
+![Deno](https://img.shields.io/badge/Deno-1.25.4-blue?logo=deno) <!-- @denopendabot denoland/deno -->
+![Node](https://img.shields.io/badge/Node-16.17.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
+![Wrangler](https://img.shields.io/badge/Wrangler-2.1.6-blue?logo=cloudflare) <!-- @denopendabot cloudflare/wrangler2 -->
 
 `brawler` is a command-line tool and library to develop and deploy
 [Deno](https://deno.land) scripts for
 [Cloudflare Workers](https://workers.cloudflare.com) with
 [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started).
+
+<!-- deno-fmt-ignore-end -->
 
 > **Warning**\
 > The project is still in an early-beta stage and not tested extensively yet.
