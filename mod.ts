@@ -1,12 +1,12 @@
-import * as log from "https://deno.land/std@0.157.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.159.0/log/mod.ts";
 import {
   basename,
   dirname,
   extname,
   join,
-} from "https://deno.land/std@0.157.0/path/mod.ts";
-import { format } from "https://deno.land/std@0.157.0/datetime/mod.ts";
-import { transform } from "https://deno.land/x/dnt@0.30.0/transform.ts";
+} from "https://deno.land/std@0.159.0/path/mod.ts";
+import { format } from "https://deno.land/std@0.159.0/datetime/mod.ts";
+import { transform } from "https://deno.land/x/dnt@0.31.0/transform.ts";
 import { jason } from "https://deno.land/x/jason_formatter@v2.2.0/mod.ts";
 
 export const wranglerLogLevel = [
