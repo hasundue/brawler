@@ -5,7 +5,7 @@ import {
   extname,
   join,
 } from "https://deno.land/std@0.159.0/path/mod.ts";
-import { format } from "https://deno.land/std@0.159.0/datetime/mod.ts";
+import { format } from "https://deno.land/std@0.160.0/datetime/mod.ts";
 import { transform } from "https://deno.land/x/dnt@0.31.0/transform.ts";
 import { jason } from "https://deno.land/x/jason_formatter@v2.2.0/mod.ts";
 
