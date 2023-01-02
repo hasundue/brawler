@@ -6,7 +6,7 @@ import {
   join,
 } from "https://deno.land/std@0.161.0/path/mod.ts";
 import { format } from "https://deno.land/std@0.161.0/datetime/mod.ts";
-import { transform } from "https://deno.land/x/dnt@0.31.0/transform.ts";
+import { transform } from "https://deno.land/x/dnt@0.32.1/transform.ts";
 import { jason } from "https://deno.land/x/jason_formatter@v2.2.0/mod.ts";
 
 export const wranglerLogLevel = [
