@@ -58,12 +58,12 @@ jobs:
           node-version: 16.17.0 # @denopendabot nodejs/node
 
       - name: Install Wrangler
-        run: npm install -g wrangler@2.6.2 # @denopendabot cloudflare/wrangler2
+        run: npm install -g wrangler@2.1.6 # @denopendabot cloudflare/wrangler2
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
         with:
-          version: 1.8.1 # @denopendabot JuliaLang/julia
+          version: v1.8.4 # @denopendabot JuliaLang/julia
 
       - name: Install dependencies
         run: julia --color=yes --project=test -e 'using Pkg; Pkg.build()'
