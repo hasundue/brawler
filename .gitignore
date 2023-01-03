@@ -1,3 +1,4 @@
 /bin
 Manifest.toml
 deno.lock
+node_modules/
