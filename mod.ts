@@ -114,6 +114,13 @@ export async function build(
     );
   }
 
+  // Create node_modules directory
+  const deno = Deno.run({
+    cmd: ["deno", "cache", join(Deno.cwd(), scriptPath), "--node-modules-dir"],
+    cwd: tempDir,
+  });
+  await deno.status();
+
   const count = output.main.files.length;
   logger.debug(`Transformed ${count} files.`);
 }

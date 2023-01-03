@@ -1,4 +1,4 @@
-import { Hono } from "https://deno.land/x/hono@v2.7.1/mod.ts";
+import { Hono } from "npm:hono@2.7.1";
 
 const app = new Hono();
 
