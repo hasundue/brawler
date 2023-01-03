@@ -97,7 +97,7 @@ export async function build(
 
   const output = await transform({
     entryPoints: [scriptPath],
-    target: "ES2021",
+    target: "ES2020",
   });
 
   const tempDir = options?.tempDir ?? await makeTempDir();
