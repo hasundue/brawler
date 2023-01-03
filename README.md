@@ -4,7 +4,7 @@
 
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
 ![Deno](https://img.shields.io/badge/Deno-v1.25.4-blue?logo=deno) <!-- @denopendabot denoland/deno -->
-![Node](https://img.shields.io/badge/Node-1v1v19.3.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
+![Node](https://img.shields.io/badge/Node-1v19.3.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
 ![Wrangler](https://img.shields.io/badge/Wrangler-2.6.2-blue?logo=cloudflare) <!-- @denopendabot cloudflare/wrangler2 -->
 
 `brawler` is a command-line tool and library to develop and deploy
@@ -22,7 +22,7 @@
 Use the script installer of `deno`:
 
 ```sh
-deno install -A --name brawler https://deno.land/x/brawler@0.1.1/cli.ts
+deno install -A --name brawler https://deno.land/x/brawler@0.1.2/cli.ts
 ```
 
 Note that `wrangler` (https://github.com/cloudflare/wrangler2) must be also
