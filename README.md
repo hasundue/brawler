@@ -3,8 +3,8 @@
 <!-- deno-fmt-ignore-start -->
 
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
-![Deno](https://img.shields.io/badge/Deno-v1.29.1-blue?logo=deno) <!-- @denopendabot denoland/deno -->
-![Node](https://img.shields.io/badge/Node-16.17.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
+![Deno](https://img.shields.io/badge/Deno-v1.25.4-blue?logo=deno) <!-- @denopendabot denoland/deno -->
+![Node](https://img.shields.io/badge/Node-1v19.3.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
 ![Wrangler](https://img.shields.io/badge/Wrangler-2.6.2-blue?logo=cloudflare) <!-- @denopendabot cloudflare/wrangler2 -->
 
 `brawler` is a command-line tool and library to develop and deploy
