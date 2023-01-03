@@ -22,7 +22,7 @@
 Use the script installer of `deno`:
 
 ```sh
-deno install -A --name brawler https://deno.land/x/brawler@0.1.1/cli.ts
+deno install -A --name brawler https://deno.land/x/brawler@0.1.2/cli.ts
 ```
 
 Note that `wrangler` (https://github.com/cloudflare/wrangler2) must be also
