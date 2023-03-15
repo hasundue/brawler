@@ -58,7 +58,7 @@ jobs:
           node-version: v19.8.0 # @denopendabot nodejs/node
 
       - name: Install Wrangler
-        run: npm install -g wrangler@2.12.2 # @denopendabot cloudflare/wrangler2
+        run: npm install -g wrangler@2.12.3 # @denopendabot cloudflare/wrangler2
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
