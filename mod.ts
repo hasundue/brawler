@@ -1,11 +1,11 @@
-import * as log from "https://deno.land/std@0.182.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.183.0/log/mod.ts";
 import {
   basename,
   dirname,
   extname,
   join,
-} from "https://deno.land/std@0.182.0/path/mod.ts";
-import { format } from "https://deno.land/std@0.182.0/datetime/mod.ts";
+} from "https://deno.land/std@0.183.0/path/mod.ts";
+import { format } from "https://deno.land/std@0.183.0/datetime/mod.ts";
 import { transform } from "https://deno.land/x/dnt@0.33.1/transform.ts";
 import { jason } from "https://deno.land/x/jason_formatter@v2.2.0/mod.ts";
 
