@@ -21,7 +21,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.32.3 # @denopendabot denoland/deno
+          deno-version: v1.32.4 # @denopendabot denoland/deno
 
       - name: Format
         run: deno fmt --check
@@ -50,15 +50,15 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.32.3 # @denopendabot denoland/deno
+          deno-version: v1.32.4 # @denopendabot denoland/deno
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: v19.8.1 # @denopendabot nodejs/node
+          node-version: v19.9.0 # @denopendabot nodejs/node
 
       - name: Install Wrangler
-        run: npm install -g wrangler@2.14.0 # @denopendabot cloudflare/wrangler2
+        run: npm install -g wrangler@2.15.0 # @denopendabot cloudflare/wrangler2
 
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
