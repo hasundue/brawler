@@ -5,7 +5,7 @@
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
 ![Deno](https://img.shields.io/badge/Deno-v1.32.4-blue?logo=deno) <!-- @denopendabot denoland/deno -->
 ![Node](https://img.shields.io/badge/Node-v19.9.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
-![Wrangler](https://img.shields.io/badge/Wrangler-2.14.0-blue?logo=cloudflare) <!-- @denopendabot cloudflare/wrangler2 -->
+![Wrangler](https://img.shields.io/badge/Wrangler-2.15.0-blue?logo=cloudflare) <!-- @denopendabot cloudflare/wrangler2 -->
 
 `brawler` is a command-line tool and library to develop and deploy
 [Deno](https://deno.land) scripts for
