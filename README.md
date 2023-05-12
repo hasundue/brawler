@@ -3,7 +3,7 @@
 <!-- deno-fmt-ignore-start -->
 
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
-![Deno](https://img.shields.io/badge/Deno-v1.32.5-blue?logo=deno) <!-- @denopendabot denoland/deno -->
+![Deno](https://img.shields.io/badge/Deno-v1.33.2-blue?logo=deno) <!-- @denopendabot denoland/deno -->
 ![Node](https://img.shields.io/badge/Node-v20.0.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
 ![Wrangler](https://img.shields.io/badge/Wrangler-2.15.0-blue?logo=cloudflare) <!-- @denopendabot cloudflare/wrangler2 -->
 
