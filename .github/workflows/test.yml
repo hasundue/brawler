@@ -63,7 +63,7 @@ jobs:
       - name: Setup Julia
         uses: julia-actions/setup-julia@v1
         with:
-          version: v1.8.5 # @denopendabot JuliaLang/julia
+          version: v1.9.0 # @denopendabot JuliaLang/julia
 
       - name: Install dependencies
         run: julia --color=yes --project=test -e 'using Pkg; Pkg.build()'
