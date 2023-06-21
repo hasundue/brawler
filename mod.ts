@@ -115,11 +115,11 @@ export async function build(
   }
 
   // Create node_modules directory
-  const deno = Deno.run({
-    cmd: ["deno", "cache", join(Deno.cwd(), scriptPath), "--node-modules-dir"],
-    cwd: tempDir,
+  const command = new Deno.Command(tempDir, {
+    args: ["deno", "cache", join(Deno.cwd(), scriptPath), "--node-modules-dir"],
   });
-  await deno.status();
+  const child = command.spawn();
+  await child.status;
 
   const count = output.main.files.length;
   logger.debug(`Transformed ${count} files.`);
@@ -186,20 +186,17 @@ export async function dev(
 
   logger.debug(`Launching wrangler...`);
 
-  const wrangler = Deno.run({
-    cmd: buildWranglerCmd(basename(scriptPath), "dev", options),
-    cwd: tempDir,
-    stdin: "inherit",
-    stdout: "inherit",
+  const command = new Deno.Command(tempDir, {
+    args: buildWranglerCmd(basename(scriptPath), "dev", options),
   });
+  const wrangler = command.spawn();
 
   logger.debug(`Watching changes in ${scriptDir}...`);
 
   const builder = () => build(scriptPath, { logLevel, tempDir });
   const watcher = watch(scriptDir, builder);
 
-  const status = await wrangler.status();
-  wrangler.close();
+  const status = await wrangler.status;
   await Deno.remove(tempDir, { recursive: true });
 
   watcher.close();
@@ -229,15 +226,12 @@ export async function publish(
     logger.warning("wrangler.toml not found.");
   }
 
-  const wrangler = Deno.run({
-    cmd: buildWranglerCmd(basename(scriptPath), "publish", options),
-    cwd: tempDir,
-    stdin: "inherit",
-    stdout: "inherit",
+  const command = new Deno.Command(tempDir, {
+    args: buildWranglerCmd(basename(scriptPath), "publish", options),
   });
+  const wrangler = command.spawn();
 
-  const status = await wrangler.status();
-  wrangler.close();
+  const status = await wrangler.status;
   await Deno.remove(tempDir, { recursive: true });
 
   return status.code;
