@@ -2,12 +2,13 @@ import * as log from "https://deno.land/std@0.186.0/log/mod.ts";
 import {
   basename,
   dirname,
-  extname,
   join,
 } from "https://deno.land/std@0.186.0/path/mod.ts";
 import { format } from "https://deno.land/std@0.186.0/datetime/mod.ts";
-import { transform } from "https://deno.land/x/dnt@0.35.0/transform.ts";
 import { jason } from "https://deno.land/x/jason_formatter@v2.2.0/mod.ts";
+import * as esbuild from "https://deno.land/x/esbuild@v0.17.19/mod.js";
+import { denoPlugins } from "https://deno.land/x/esbuild_deno_loader@0.8.1/mod.ts";
+import { Mutex } from "https://deno.land/x/async@v2.0.2/mutex.ts";
 
 export const wranglerLogLevel = [
   "debug",
@@ -48,7 +49,7 @@ export async function init(
 
   try {
     await Deno.stat("deno.json");
-    console.error("deno.json already exists.");
+    throw new Error("deno.json already exists.");
   } catch {
     // deno.json does not exist
     const options = {
@@ -63,7 +64,7 @@ export async function init(
 
   try {
     await Deno.stat(configPath);
-    console.error(`${configPath} already exists.`);
+    throw new Error(`${configPath} already exists.`);
   } catch {
     const name = maybeName ?? basename(Deno.cwd());
     const date = format(new Date(), "yyyy-MM-dd");
@@ -77,15 +78,7 @@ export async function init(
 
 export type BuildOptions = {
   logLevel?: typeof wranglerLogLevel[number];
-  tempDir?: string;
-};
-
-const makeTempDir = async () => {
-  const tempDir = await Deno.makeTempDir({ prefix: "brawler" });
-  globalThis.addEventListener("unload", async () => {
-    await Deno.remove(tempDir);
-  });
-  return tempDir;
+  dist?: string;
 };
 
 export async function build(
@@ -95,46 +88,35 @@ export async function build(
   const logger = log.getLogger(options?.logLevel ?? "log");
   logger.debug(`Building ${scriptPath}...`);
 
-  const output = await transform({
+  const result = await esbuild.build({
+    plugins: [...denoPlugins()],
     entryPoints: [scriptPath],
-    target: "ES2020",
+    outfile: join(options?.dist ?? "dist", "index.js"),
+    bundle: true,
+    format: "esm",
   });
 
-  const tempDir = options?.tempDir ?? await makeTempDir();
-  const encoder = new TextEncoder();
-
-  for (const file of output.main.files) {
-    await Deno.mkdir(
-      join(tempDir, dirname(file.filePath)),
-      { recursive: true },
-    );
-    await Deno.writeFile(
-      join(tempDir, file.filePath),
-      encoder.encode(file.fileText),
-    );
+  for (const warn of result.warnings) {
+    logger.warning(warn.text);
+  }
+  for (const error of result.errors) {
+    logger.error(error.text);
   }
 
-  // Create node_modules directory
-  const command = new Deno.Command(tempDir, {
-    args: ["deno", "cache", join(Deno.cwd(), scriptPath), "--node-modules-dir"],
-  });
-  const child = command.spawn();
-  await child.status;
-
-  const count = output.main.files.length;
-  logger.debug(`Transformed ${count} files.`);
+  esbuild.stop();
 }
 
 function watch(
   scriptPath: string,
-  builder: () => Promise<void>,
+  builder: (mutex: Mutex) => Promise<void>,
 ) {
   const watcher = Deno.watchFs(dirname(scriptPath));
+  const mutex = new Mutex();
 
   const handler = async () => {
     for await (const event of watcher) {
-      if (event.kind === "modify" && extname(event.paths[0]) === ".ts") {
-        builder();
+      if (event.kind === "modify" && !mutex.locked) {
+        builder(mutex);
       }
     }
   };
@@ -152,24 +134,27 @@ export type DevOptions = WranglerOptions & {
   config?: string;
 };
 
-function buildWranglerCmd(
-  scriptName: string,
+const wranglerCommand = Deno.build.os === "windows"
+  ? "wrangler.cmd"
+  : "wrangler";
+
+function wranglerArgs(
   subcmd: "dev" | "publish",
   options?: DevOptions,
 ) {
   const { logLevel, ...wranglerOptions } = options ?? {};
+  const args = [subcmd, join("dist", "index.js")];
 
-  const wranglerCmd = Deno.build.os === "windows" ? "wrangler.cmd" : "wrangler";
-  const cmd = [wranglerCmd, subcmd, scriptName];
-  if (logLevel) cmd.concat(["--log-level", logLevel]);
+  args.concat(["--no-bundle"]);
+  if (logLevel) args.concat(["--log-level", logLevel]);
 
   Object.entries(wranglerOptions).forEach(([key, value]) => {
     const prefix = key.length === 1 ? "-" : "--";
-    cmd.push(prefix + key);
-    if (typeof value === "string") cmd.push(value);
+    args.push(prefix + key);
+    if (typeof value === "string") args.push(value);
   });
 
-  return cmd;
+  return args;
 }
 
 export async function dev(
@@ -180,27 +165,28 @@ export async function dev(
   const logger = log.getLogger(logLevel ?? "log");
 
   const scriptDir = dirname(scriptPath);
-  const tempDir = await makeTempDir();
 
-  await build(scriptPath, { logLevel, tempDir });
+  await build(scriptPath, { logLevel });
 
   logger.debug(`Launching wrangler...`);
-
-  const command = new Deno.Command(tempDir, {
-    args: buildWranglerCmd(basename(scriptPath), "dev", options),
+  const command = new Deno.Command(wranglerCommand, {
+    args: wranglerArgs("dev", options),
+    stdin: "inherit",
+    stdout: "inherit",
   });
   const wrangler = command.spawn();
 
-  logger.debug(`Watching changes in ${scriptDir}...`);
+  const builder = async (mutex: Mutex) => {
+    await mutex.acquire();
+    await build(scriptPath, { logLevel });
+    mutex.release();
+  };
 
-  const builder = () => build(scriptPath, { logLevel, tempDir });
+  logger.debug(`Watching changes in ${scriptDir}...`);
   const watcher = watch(scriptDir, builder);
 
   const status = await wrangler.status;
-  await Deno.remove(tempDir, { recursive: true });
-
   watcher.close();
-
   return status.code;
 }
 
@@ -211,28 +197,14 @@ export async function publish(
   options?: PublishOptions,
 ) {
   const logLevel = options?.logLevel;
-  const logger = log.getLogger(logLevel ?? "log");
 
-  const tempDir = await makeTempDir();
+  await build(scriptPath, { logLevel });
 
-  await build(scriptPath, { logLevel, tempDir });
-
-  const configPath = options?.config ??
-    join(dirname(scriptPath), "wrangler.toml");
-
-  try {
-    await Deno.copyFile(configPath, join(tempDir, basename(configPath)));
-  } catch {
-    logger.warning("wrangler.toml not found.");
-  }
-
-  const command = new Deno.Command(tempDir, {
-    args: buildWranglerCmd(basename(scriptPath), "publish", options),
+  const command = new Deno.Command(wranglerCommand, {
+    args: wranglerArgs("publish", options),
   });
   const wrangler = command.spawn();
 
   const status = await wrangler.status;
-  await Deno.remove(tempDir, { recursive: true });
-
   return status.code;
 }
