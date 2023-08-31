@@ -116,10 +116,12 @@ describe("brawler dev", () => {
       );
       reader.releaseLock();
 
-      const response = await fetch("http://localhost:8787");
-      assertEquals(response.status, 200);
-      const text = await response.text();
-      assertStringIncludes(text, "Brawler!");
+      await retry(async () => {
+        const response = await fetch("http://localhost:8787");
+        assertEquals(response.status, 200);
+        const text = await response.text();
+        assertStringIncludes(text, "Brawler!");
+      });
     });
   });
 });
