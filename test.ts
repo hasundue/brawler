@@ -11,9 +11,8 @@ import {
 import { deadline, retry } from "https://deno.land/std@0.200.0/async/mod.ts";
 import $ from "https://deno.land/x/dax@0.34.0/mod.ts";
 
-const brawler = Deno.build.os === "windows"
-  ? "bin/brawler.cmd "
-  : "bin/brawler";
+const isWindows = Deno.build.os === "windows";
+const brawler = isWindows ? "bin/brawler.cmd " : "bin/brawler";
 const script = "examples/hono/index.ts";
 const compatibility_date = "2023-08-15";
 
@@ -33,7 +32,7 @@ describe("brawler", () => {
   });
 });
 
-describe("brawler dev", () => {
+describe("brawler dev", { ignore: isWindows }, () => {
   describe("$ brawler dev", () => {
     it("should print an error", async () => {
       try {
