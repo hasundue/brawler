@@ -9,11 +9,12 @@ import {
   assertStringIncludes,
 } from "https://deno.land/std@0.200.0/assert/mod.ts";
 import { deadline, retry } from "https://deno.land/std@0.200.0/async/mod.ts";
+import { join } from "https://deno.land/std@0.200.0/path/mod.ts";
 import $ from "https://deno.land/x/dax@0.34.0/mod.ts";
 
 const root = new URL(".", import.meta.url).pathname;
 const brawler = `${root}bin/brawler`;
-const script = `${root}examples/hono/index.ts`;
+const script = join(root, "examples", "hono", "index.ts");
 const compatibility_date = "2023-08-15";
 
 describe("brawler", () => {
