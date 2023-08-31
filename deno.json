@@ -1,7 +1,7 @@
 {
   "tasks": {
     "build": "deno install -f -q -A --name brawler --root . cli.ts",
-    "test": "julia --project=test test/runtests.jl",
+    "test": "deno task build && deno test -A test.ts",
     "dev": "deno lint && deno fmt && deno task test"
   }
 }

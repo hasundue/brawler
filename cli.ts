@@ -2,7 +2,7 @@ import {
   Command,
   EnumType,
 } from "https://deno.land/x/cliffy@v0.25.7/command/mod.ts";
-import { dev, init, publish, wranglerLogLevel } from "./mod.ts";
+import { deploy, dev, wranglerLogLevel } from "./mod.ts";
 
 new Command()
   .name("brawler")
@@ -13,20 +13,21 @@ new Command()
     "-c, --config <path:string>",
     "Path to .toml configuration file",
   )
-  .command(
-    "init",
-    "Create wrangler.toml and deno.json configuration files",
+  .globalOption(
+    "-o, --outdir <outdir:string>",
+    "Directory to write the built worker to",
   )
-  .arguments("[name:string] [options...]")
-  .action(async (options, name) => await init(name, options))
+  .globalOption(
+    "--log-level <level:log-level>",
+    "Specify logging level",
+  )
+  .globalOption("-*, --* [value]", "Options passed to wrangler", {
+    hidden: true,
+  })
   .command(
     "dev",
     "Start a local server for developing your worker",
   )
-  .option("-*, --* [value]", "Options passed to wrangler", {
-    hidden: true,
-  })
-  .option("--log-level <level:log-level>", "Specify logging level")
   .arguments("<script:string> [options...]")
   .action(async (options, script) =>
     await dev(script, {
@@ -35,13 +36,9 @@ new Command()
     })
   )
   .command(
-    "publish",
-    "Publish your Worker to Cloudflare",
+    "deploy",
+    "Deploy your Worker to Cloudflare",
   )
-  .option("-*, --* [value]", "Options passed to wrangler", {
-    hidden: true,
-  })
-  .option("--log-level <level:log-level>", "Specify logging level")
   .arguments("<script:string> [options...]")
-  .action(async (options, script) => await publish(script, options))
+  .action(async (options, script) => await deploy(script, options))
   .parse();
