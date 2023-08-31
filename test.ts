@@ -11,7 +11,9 @@ import {
 import { deadline, retry } from "https://deno.land/std@0.200.0/async/mod.ts";
 import $ from "https://deno.land/x/dax@0.34.0/mod.ts";
 
-const brawler = "bin/brawler";
+const brawler = Deno.build.os === "windows"
+  ? "bin/brawler.cmd "
+  : "bin/brawler";
 const script = "examples/hono/index.ts";
 const compatibility_date = "2023-08-15";
 
