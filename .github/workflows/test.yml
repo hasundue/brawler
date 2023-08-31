@@ -60,6 +60,9 @@ jobs:
       - name: Install Wrangler
         run: npm install -g wrangler@3.5.1 # @denopendabot npm:wrangler
 
+      - name: Cache dependencies
+        run: deno cache test.ts
+
       - name: Run tests
         run: deno task test
         env:
