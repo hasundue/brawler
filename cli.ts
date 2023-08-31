@@ -2,7 +2,7 @@ import {
   Command,
   EnumType,
 } from "https://deno.land/x/cliffy@v0.25.7/command/mod.ts";
-import { dev, publish, wranglerLogLevel } from "./mod.ts";
+import { deploy, dev, wranglerLogLevel } from "./mod.ts";
 
 new Command()
   .name("brawler")
@@ -36,9 +36,9 @@ new Command()
     })
   )
   .command(
-    "publish",
-    "Publish your Worker to Cloudflare",
+    "deploy",
+    "Deploy your Worker to Cloudflare",
   )
   .arguments("<script:string> [options...]")
-  .action(async (options, script) => await publish(script, options))
+  .action(async (options, script) => await deploy(script, options))
   .parse();
