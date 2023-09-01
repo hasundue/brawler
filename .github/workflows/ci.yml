@@ -20,6 +20,6 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: hasundue/denomantic-release@0.8.1
+      - uses: hasundue/denomantic-release@0.8.2
         with:
           denopendabot: app
