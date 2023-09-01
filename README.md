@@ -1,4 +1,4 @@
-# brawler
+# 🥊 Brawler
 
 <!-- deno-fmt-ignore-start -->
 
@@ -7,7 +7,7 @@
 ![Node](https://img.shields.io/badge/Node-v20.1.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
 ![Wrangler](https://img.shields.io/badge/Wrangler-2.20.0-blue?logo=cloudflare) <!-- @denopendabot npm:wrangler -->
 
-`brawler` is a wrapper of [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started) to develop and deploy
+Brawler is a wrapper of [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started) to develop and deploy
 [Cloudflare Workers](https://workers.cloudflare.com) with [Deno](https://deno.land).
 
 <!-- deno-fmt-ignore-end -->
@@ -45,8 +45,8 @@ brawler publish index.ts --name my-brawler-project --compatibility-date 2023-08-
 
 ## How it works
 
-`brawler` bundles Deno scripts with `esbuild` and `esbuild-deno-loader`, and
-passes them to `wrangler`. It also watches updates on the project by
+Brawler bundles Deno scripts with `esbuild` and `esbuild-deno-loader`, and
+passes them to `wrangler`. It also watches updates on projects by
 `Deno.watchFs` and repeats the procedure for each update.
 
 ## Examples
