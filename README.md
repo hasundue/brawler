@@ -5,7 +5,7 @@
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
 ![Deno](https://img.shields.io/badge/Deno-v1.33.2-blue?logo=deno) <!-- @denopendabot denoland/deno -->
 ![Node](https://img.shields.io/badge/Node-v20.1.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
-![Wrangler](https://img.shields.io/badge/Wrangler-2.20.0-blue?logo=cloudflare) <!-- @denopendabot npm:wrangler -->
+![Wrangler](https://img.shields.io/badge/Wrangler-3-blue?logo=cloudflare)
 
 Brawler is a wrapper of [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started) to develop and deploy
 [Cloudflare Workers](https://workers.cloudflare.com) with [Deno](https://deno.land).
@@ -46,8 +46,8 @@ brawler publish index.ts --name my-brawler-project --compatibility-date 2023-08-
 ## How it works
 
 Brawler bundles Deno scripts with `esbuild` and `esbuild-deno-loader`, and
-passes them to `wrangler`. It also watches updates on projects by
-`Deno.watchFs` and repeats the procedure for each update.
+passes them to `wrangler`. It also watches updates on projects by `Deno.watchFs`
+and repeats the procedure for each update.
 
 ## Examples
 
@@ -57,8 +57,8 @@ passes them to `wrangler`. It also watches updates on projects by
 
 ## Background
 
-Yes, we have `denoflare` (https://denoflare.dev), which is a great project
-letting you work with a pure Deno environment.
+Yes, we have Denoflare (https://denoflare.dev), which is a great project letting
+you work with a pure Deno environment.
 
-However, `denoflare` still lacks some portion of functionality that `wrangler`
+However, Denoflare still lacks some portion of functionality that Wrangler
 provides, which is why this project exists for now.
