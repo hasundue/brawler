@@ -62,7 +62,7 @@ jobs:
           node-version: v20.1.0 # @denopendabot nodejs/node
 
       - name: Install Wrangler
-        run: npm install -g wrangler@3
+        run: npm install -g wrangler@3.6.0
 
       - name: Cache dependencies
         run: deno cache test.ts
