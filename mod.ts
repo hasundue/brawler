@@ -1,7 +1,7 @@
-import * as log from "https://deno.land/std@0.186.0/log/mod.ts";
-import { dirname, join } from "https://deno.land/std@0.186.0/path/mod.ts";
-import { signal } from "https://deno.land/std@0.186.0/signal/mod.ts";
-import * as esbuild from "https://deno.land/x/esbuild@v0.17.19/mod.js";
+import * as log from "https://deno.land/std@0.201.0/log/mod.ts";
+import { dirname, join } from "https://deno.land/std@0.201.0/path/mod.ts";
+import { signal } from "https://deno.land/std@0.201.0/signal/mod.ts";
+import * as esbuild from "https://deno.land/x/esbuild@v0.19.2/mod.js";
 import { denoPlugins } from "https://deno.land/x/esbuild_deno_loader@0.8.1/mod.ts";
 import { Mutex } from "https://deno.land/x/async@v2.0.2/mutex.ts";
 
