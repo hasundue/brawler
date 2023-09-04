@@ -40,7 +40,7 @@ touch index.ts
 brawler dev index.ts
 
 # publish it
-brawler publish index.ts --name my-brawler-project --compatibility-date 2023-08-15
+brawler deploy index.ts --name my-brawler-project --compatibility-date 2023-08-15
 ```
 
 ## How it works
