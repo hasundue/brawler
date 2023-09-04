@@ -6,7 +6,7 @@ import { deploy, dev, wranglerLogLevel } from "./mod.ts";
 
 new Command()
   .name("brawler")
-  .version("0.2.0") // @denopendabot hasundue/brawler
+  .version("0.2.1") // @denopendabot hasundue/brawler
   .description("Develop and deploy Cloudflare Workers with Deno and Wrangler")
   .globalType("log-level", new EnumType(wranglerLogLevel))
   .globalOption(
