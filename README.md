@@ -4,7 +4,7 @@
 
 [![Test](https://github.com/hasundue/brawler/actions/workflows/test.yml/badge.svg)](https://github.com/hasundue/brawler/actions/workflows/test.yml)
 ![Deno](https://img.shields.io/badge/Deno-v1.36.4-blue?logo=deno) <!-- @denopendabot denoland/deno -->
-![Node](https://img.shields.io/badge/Node-v20.5.1-blue?logo=node) <!-- @denopendabot nodejs/node -->
+![Node](https://img.shields.io/badge/Node-v20.6.0-blue?logo=node) <!-- @denopendabot nodejs/node -->
 ![Wrangler](https://img.shields.io/badge/Wrangler-3.6.0-blue?logo=cloudflare)
 
 Brawler is a wrapper of [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started) to develop and deploy
