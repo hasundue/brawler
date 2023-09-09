@@ -59,7 +59,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: v20.6.0 # @denopendabot nodejs/node
+          node-version: v20.6.1 # @denopendabot nodejs/node
 
       - name: Install Wrangler
         run: npm install -g wrangler@3.6.0
