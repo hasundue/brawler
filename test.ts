@@ -3,12 +3,12 @@ import {
   beforeAll,
   describe,
   it,
-} from "https://deno.land/std@0.203.0/testing/bdd.ts";
+} from "https://deno.land/std@0.204.0/testing/bdd.ts";
 import {
   assertEquals,
   assertStringIncludes,
-} from "https://deno.land/std@0.203.0/assert/mod.ts";
-import { deadline, retry } from "https://deno.land/std@0.203.0/async/mod.ts";
+} from "https://deno.land/std@0.204.0/assert/mod.ts";
+import { deadline, retry } from "https://deno.land/std@0.204.0/async/mod.ts";
 import $ from "https://deno.land/x/dax@0.35.0/mod.ts";
 
 const isWindows = Deno.build.os === "windows";
