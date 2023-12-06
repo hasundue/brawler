@@ -21,7 +21,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.38.4 # @denopendabot denoland/deno
+          deno-version: v1.38.5 # @denopendabot denoland/deno
 
       - name: Format
         run: deno fmt --check
@@ -54,12 +54,12 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.38.4 # @denopendabot denoland/deno
+          deno-version: v1.38.5 # @denopendabot denoland/deno
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: v21.3.0 # @denopendabot nodejs/node
+          node-version: v21.4.0 # @denopendabot nodejs/node
 
       - name: Install Wrangler
         run: npm install -g wrangler@3.6.0
