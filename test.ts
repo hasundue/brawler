@@ -9,7 +9,7 @@ import {
   assertStringIncludes,
 } from "https://deno.land/std@0.209.0/assert/mod.ts";
 import { deadline, retry } from "https://deno.land/std@0.209.0/async/mod.ts";
-import $ from "https://deno.land/x/dax@0.35.0/mod.ts";
+import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
 
 const isWindows = Deno.build.os === "windows";
 const brawler = isWindows ? "bin/brawler.cmd " : "bin/brawler";
